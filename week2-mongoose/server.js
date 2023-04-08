@@ -1,40 +1,13 @@
 const http = require('http');
 const mongoose = require('mongoose');
+const Post = require('./model/post')
 mongoose
 .connect("mongodb://localhost:27017/testPost")
 .then(() => console.log('資料庫連接成功'))
 .catch((err) => {
 	console.log('資料庫連線失敗', err);
 })
-// schema 開始 
-const postSchema = new mongoose.Schema(
-    {
-      content: {
-        type: String,
-        required: [true, 'Content 未填寫']
-      },
-      image: {
-        type:String,
-        default:""
-      },
-      createdAt: {
-        type: Date,
-        default: Date.now(),
-        select: false
-      },
-      name: {
-          type: String,
-          required: [true, '貼文姓名未填寫']
-      },
-      likes: {
-          type:Number,
-          default:0
-        }
-    }
-);
-const Post = mongoose.model('Post', postSchema);
 
-// schema 結束
 const requestListener = async(req, res)=>{
     const headers = {
         'Access-Control-Allow-Headers': 'Content-Type, Authorization, Content-Length, X-Requested-With',
