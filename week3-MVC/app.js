@@ -5,6 +5,14 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var postsRouter = require('./routes/posts');
+
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://127.0.0.1:27017/testPost').then((res) => {
+  console.log("連線成功");
+}).catch((err) => {
+  console.log("連線失敗", err);
+})
 
 var app = express();
 
@@ -16,5 +24,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/posts', postsRouter);
 
 module.exports = app;
